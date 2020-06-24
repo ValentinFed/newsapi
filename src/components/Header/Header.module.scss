@@ -1,0 +1,29 @@
+.Header {
+  height: 60px;
+  background-color: aqua;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  select {
+    margin-right: 5rem;
+  }
+}
+
+.Header ul {
+  display: flex;
+  list-style: none;
+}
+
+.Header li {
+  padding: 1rem;
+}
+
+.Header a {
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: rgb(41, 41, 41);
+}
+
+.Header a:hover {
+}
