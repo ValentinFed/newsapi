@@ -1,10 +1,10 @@
 import React from 'react'
-import "./NewsList.css"
+import classes from  "./NewsList.module.scss"
 import NewsCard from '../NewsCard/NewsCard'
 
 
 const NewsList = (props) => (
-    <div id="NewsList">
+    <div id={classes.NewsList}>
         {props.articles.map(item => (
             <NewsCard
                 key={item.publishedAt+Math.random()}

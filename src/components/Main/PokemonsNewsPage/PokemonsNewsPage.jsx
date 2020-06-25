@@ -6,10 +6,17 @@ import NewsList from "../NewsList/NewsList"
 import moment from 'moment'
 import languageContext from '../../../languageContext';
 
+const sortByOptions = [
+    {value:'publishedAt', name: 'Publish date'},
+    {value:'relevancy', name: 'Relevancy'},
+    {value:'popularity', name: 'Popularity'},
+]
+
 const PokemonsNewsPage = () => {
     
     const [startDate, setStartDate] = useState(moment().subtract(1, 'months').toDate())
     const [endDate, setEndDate] = useState(moment().toDate())
+    const [sortBy, setSortBy] = useState(sortByOptions[0].value)
     const [results, setResults] = useState(null)
     const lang = useContext(languageContext);
 
@@ -18,18 +25,21 @@ const PokemonsNewsPage = () => {
         if(startDate > endDate) return alert('Whatttttt????????')
 
         fetch(
-          `http://localhost:4000/pokemons-news?language=${lang}&from=${startDate.toISOString()}&to=${endDate.toISOString()}`
+          `http://localhost:4000/pokemons-news?language=${lang}&from=${startDate.toISOString()}&to=${endDate.toISOString()}&sortBy=${sortBy}`
         )
           .then(response => response.json())
           .then(res => setResults(res));
-      }, [startDate, endDate, lang]);
+      }, [startDate, endDate, lang, sortBy]);
 
  
       useEffect(() => {
         fetchArticles();
       }, [fetchArticles]);
 
-
+     const sortBySend = (e) => {
+        const value = e.target.value;
+        setSortBy(value)
+     }
 
     return (
         <div className={classes.PokemonsNewsPage}>
@@ -52,6 +62,14 @@ const PokemonsNewsPage = () => {
                         dateFormat='dd-MM-yyyy'
                         maxDate={new Date()}
                     />
+                </div>
+
+                <div className={classes.PokemonsNewsPage__nav_item}>
+                    <label> Sort by:</label>
+                    <select value={sortBy} onChange={sortBySend}>
+                        {sortByOptions.map( ({value,name}) => <option key={value + Math.random()} value={value}>{name}</option>)}
+                    </select>
+                     
                 </div>
              </div>   
          
